@@ -1,15 +1,15 @@
 ﻿namespace ClassLibrary1;
 public class College
 {
-    List<Prof> Profs;
-    List<Stud> Studs;
+    List<Prof> _profs;
+    List<Stud> _studs;
     public string Name { get; set; }
 
     public College(string name)
     {
         Name = name;
-        Profs = new List<Prof>();
-        Studs = new List<Stud>();
+        _profs = new List<Prof>();
+        _studs = new List<Stud>();
     }
 
     public override string ToString()
@@ -22,8 +22,8 @@ public class College
         string profString = "";
         string studString = "";
 
-        Profs.ForEach(p => profString += p.ToString());
-        Studs.ForEach(s => studString += s.ToString());
+        _profs.ForEach(p => profString += p.ToString());
+        _studs.ForEach(s => studString += s.ToString());
 
         return "\nProfs: [" + profString + "]\nStuds: [" + studString + "]";
     }
@@ -31,31 +31,38 @@ public class College
     public void AddProf(Prof p)
     {
         p.ResidingCollege = Name;
-        Profs.Add(p);
+        _profs.Add(p);
     }
 
     public void AddStud(Stud s)
     {
         s.ResidingCollege = Name;
-        Studs.Add(s);
+        _studs.Add(s);
     }
 }
 
 public abstract class Person : IPerson
 {
-    public string Name;
-    public int Age;
+    public string _name;
+    public int _age;
 
     public abstract void About();
+
     public void Intro()
     {
-        Console.WriteLine("Hi, my name is " + Name + "! I am " + Age + " years old.");
+        Console.WriteLine("Hi, my name is " + _name + "! I am " + _age + " years old.");
     }
 }
 
 public interface IPerson
 {
     void Intro();
+}
+
+public interface IHobbies 
+{
+    int Hobbies();
+    int Hobbies(int num);
 }
 
 public class Prof : Person
@@ -65,14 +72,14 @@ public class Prof : Person
 
     public Prof(string name, int age, string teachingSubject)
     {
-        Name = name;
-        Age = age;
+        _name = name;
+        _age = age;
         TeachingSubject = teachingSubject;
     }
 
     public override string ToString()
     {
-        return "{ Name: " + Name + ", Age: " + Age + ", TeachingSubject: " + TeachingSubject + " }, ";
+        return "{ Name: " + _name + ", Age: " + _age + ", TeachingSubject: " + TeachingSubject + " }, ";
     }
 
     public override void About()
@@ -82,27 +89,75 @@ public class Prof : Person
     }
 }
 
-public class Stud : Person
+public class Stud : Person, IHobbies
 {
     public string Group { get; set; }
     public string ResidingCollege = "";
+    public List<string> StudHobbies { get; set; }
+    public Stud(string name, int age, string group, List<string> studHobbies)
+    {
+        _name = name;
+        _age = age;
+        Group = group;
+        StudHobbies = studHobbies;
+    }
 
     public Stud(string name, int age, string group)
     {
-        Name = name;
-        Age = age;
+        _name = name;
+        _age = age;
         Group = group;
+        StudHobbies = new List<string>();
     }
 
     public override string ToString()
     {
-        return "{ Name: " + Name + ", Age: " + Age + ", Group: " + Group + " }, ";
+        return "{ Name: " + _name + ", Age: " + _age + ", Group: " + Group + " }, ";
     }
 
     public override void About()
     {
         Intro();
         Console.WriteLine("I am a student at " + ResidingCollege);
+    }
+
+    public int Hobbies()
+    {
+        if (!StudHobbies.Any())
+        {
+            Console.WriteLine(_name + " doesn't have any hobbies registered");
+            return -1;
+        }
+
+        Console.WriteLine(_name + "'s hobbies are: ");
+
+        StudHobbies.ForEach(x => Console.WriteLine(x + ","));
+
+        Console.WriteLine("\n");
+
+        return 0;
+    }
+
+    public int Hobbies(int num)
+    {
+        if (!StudHobbies.Any()) { 
+            Console.WriteLine(_name + " doesn't have any hobbies registered");
+            return -1;
+        }
+
+        if (num > StudHobbies.Count)
+            throw new Exception("Out of range! " + _name + " has " + StudHobbies.Count + " hobbies.");
+
+        Console.WriteLine(_name + "'s hobbies are: ");
+
+        for (int i = 0; i < num; i++)
+        {
+            Console.WriteLine(StudHobbies[i] + ",");
+        }
+
+        Console.WriteLine("\n");
+
+        return 0;
     }
 }
 
