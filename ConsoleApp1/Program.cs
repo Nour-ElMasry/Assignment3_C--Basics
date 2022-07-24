@@ -1,6 +1,6 @@
-﻿using System;
-using ClassLibrary1;
-
+﻿using CollegeNS;
+using ProfessorNS;
+using StudentNS;
 
 namespace ConsoleApp 
 { 
@@ -10,11 +10,11 @@ namespace ConsoleApp
         {
             var politehnica = new College("Politehnica");
 
-            var vasi = new Prof("Vasi", 45, "OOP");
+            var vasi = new Professor("Vasi", 45, "OOP");
 
-            var nour = new Stud("Nour", 21, "1231A", new List<string>() { "Football", "Fishing", "Video games", "Billiard", "Ping pong"});
+            var nour = new Student("Nour", 21, "1231A", new List<string>() { "Football", "Fishing", "Video games", "Billiard", "Ping pong"});
 
-            var laur = new Stud("Laur", 22, "1231A");
+            var laur = new Student("Laur", 22, "1231A");
 
             politehnica.AddProf(vasi);
             politehnica.AddStud(nour);
