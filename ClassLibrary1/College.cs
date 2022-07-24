@@ -3,7 +3,7 @@ using StudentNS;
 
 
 namespace CollegeNS;
-public class College
+public class College : ICloneable
 {
     List<Professor> _profs;
     List<Student> _studs;
@@ -42,6 +42,15 @@ public class College
     {
         s.ResidingCollege = Name;
         _studs.Add(s);
+    }
+
+    public object Clone()
+    {
+        College c = new College(Name);
+        _profs.ForEach(p => c.AddProf(p));
+        _studs.ForEach(s => c.AddStud(s));
+
+        return c;
     }
 }
 

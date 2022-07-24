@@ -61,6 +61,12 @@ namespace ConsoleApp
             foreach (Person p in peopleList)
                 p.Intro();
 
+            Console.WriteLine("\n////////////////////////////////////////////////////////////////////////////\n");
+
+            //ICloneable
+            var clonedCollege = politehnica.Clone();
+            Console.WriteLine(clonedCollege.ToString());
+
         }
     }
 }
