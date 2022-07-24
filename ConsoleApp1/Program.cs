@@ -1,4 +1,5 @@
 ﻿using CollegeNS;
+using PersonNS;
 using ProfessorNS;
 using StudentNS;
 
@@ -45,6 +46,20 @@ namespace ConsoleApp
 
             //The below line of code produces an exception due to not having enough hobbies to fulfill the desired amount given in the parameter
             //laur.Hobbies(3);
+
+            Console.WriteLine("\n////////////////////////////////////////////////////////////////////////////\n");
+
+            //IEnumerable
+            Person[] peopleArray = new Person[3]
+            {
+                vasi,
+                nour,
+                laur,
+            };
+
+            People peopleList = new People(peopleArray);
+            foreach (Person p in peopleList)
+                p.Intro();
 
         }
     }
